@@ -1,0 +1,6 @@
+Item#4 : Enforce non-intantiability with a private constructor
+
+As a side-effect, it also prevents the class from being subclassed.
+All constructors must invoke a superclass constructor, explicitly 
+or implicitly, and a subclass would have no accessible superclass 
+constructors to invoke.
