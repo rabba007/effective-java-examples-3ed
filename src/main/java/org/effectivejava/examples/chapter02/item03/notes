@@ -1,0 +1,9 @@
+Item03: Enforce the singleton property with a private constructor or an enum type
+
+A singleton is simply a class that is instantiated exactly once.
+Singletons typically represent either a stateless object such as a function
+or a system component that is intrinsically unique.
+
+Note : Making a class Singleton can make it difficult to test its clients because
+it is impossible to substitute a mock implementation for a singleton unless it 
+implements an interface that serves as its type.
