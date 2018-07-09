@@ -7,3 +7,36 @@ or a system component that is intrinsically unique.
 Note : Making a class Singleton can make it difficult to test its clients because
 it is impossible to substitute a mock implementation for a singleton unless it 
 implements an interface that serves as its type.
+
+Ways to implement Singleton 
+1. keeping the constructor private and exporting a public static member to provide 
+access to the sole instance 
+   (a) the member is a field
+   (b) the member is public static factory method
+
+
+The main advantage of the the public field approach is that the API makes it clear that 
+the class is a singleton: the public static field is final, so it will always contain 
+the same object reference. The second advantage is that it is simpler.
+
+The one advantage of the static factory approach is that it gives you the flexibility to 
+change your mind about whether the class is a singleton without changing the api.
+A second advantage is that you can write a generic singleton factory if your application 
+requires it ( item#30). A final advantage of using a static factory method is that a method 
+reference can be used as a supplier, for example Elvis::instance is a Supplier<Elvis>.
+
+
+Caution ! if the Singleton created via field/factory method has to be Serializable as well :
+   To make a singleton class serializable, it is not sufficient merely to add implements 
+   Serializable to its declaration. To maintain the singleton guarantee, declare all instance 
+   fields transient and provide a readResolve method (Item#89). Otherwise eachtime a serialized
+   instance is deserialized, a new instance will be created.To prevent this from happening, add
+   this readResolve method to the Elvis class.   
+   
+2. declaring single element enum
+      This approach is similar to public static final field approach, but is more concise,
+      provides the serialization machinery for free, and provides an ironclad guarantee against 
+      multiple instantiation, even in the face of sophisticated serialization or reflection attacks.
+      This approach may feel quite unnatural, but a single-element enum type is often the best way to 
+      implement a singleton.Note you can't use this approach if your singleton must extend
+      a superclass other than Enum( though you can declare an Enum to implement interfaces)   
