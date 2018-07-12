@@ -1,0 +1,23 @@
+Item#6 : Avoid creating unnecessary objects
+An object can always be reused if it is immutable
+As an extreme example of what not to do, consider this example,
+
+String s = new String("hello"); //DON'T USE THIS!
+
+This statement creates a new String instance each time it is executed 
+and none of those object creations is necessary.The argument to the 
+String constructor ("hello") is itself a String instance,functionally
+equivalent to all of those objects created by the constructor.If this
+usage occurs in a loop or in a frequently invoked method,millions of 
+String instances would get created needlessly.
+
+The improved version is simply the following :
+  String s = "hello";
+  Furthermore, it is guaranteed that the object will be reused by any other 
+  code running in the same virtual machine that happens to contain the same
+  string literal.
+  
+Another option , you can avoid creating unnecessary objects by using static factory
+methods in preference to constructors on immutable classes that provide both. For
+example Boolean.valueOf(String) is preferable to constructor Boolean(String),which 
+was deprecated in Java 9.
